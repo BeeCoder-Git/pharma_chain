@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaTrust • Hyperledger Fabric Pharmaceutical Provenance & Route Engine</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Leaflet CSS (Fallback Map Engine) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="navbar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-dna"></i></div>
+            <div>
+                <div class="brand-title">PharmaTrust Ledger</div>
+                <div class="brand-subtitle">Hyperledger Fabric Provenance & Route Engine</div>
+            </div>
+        </div>
+        <div class="nav-status">
+            <div class="status-pill">
+                <span class="status-dot"></span>
+                <span>Channel: <b>pharma-tracking-channel</b></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs-container">
+        <button class="tab-btn active" data-tab="tab-customer">
+            <i class="fa-solid fa-shield-halved"></i> Customer Verification & Route Map
+        </button>
+        <button class="tab-btn" data-tab="tab-manufacturer">
+            <i class="fa-solid fa-industry"></i> Manufacturer (Mint & QR)
+        </button>
+        <button class="tab-btn" data-tab="tab-transporter">
+            <i class="fa-solid fa-truck-fast"></i> Transporter (GPS Breadcrumbs)
+        </button>
+        <button class="tab-btn" data-tab="tab-pharmacy">
+            <i class="fa-solid fa-prescription-bottle-medical"></i> Pharmacy & Dispenser
+        </button>
+        <button class="tab-btn" data-tab="tab-explorer">
+            <i class="fa-solid fa-cubes-stacked"></i> Consortium Explorer
+        </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+        <!-- ================================================================= -->
+        <!-- TAB 1: CUSTOMER VERIFICATION & GOOGLE MAPS ROUTE                 -->
+        <!-- ================================================================= -->
+        <section id="tab-customer" class="tab-pane active">
+            <!-- Search & Scan Control Bar -->
+            <div class="card" style="padding: 1.25rem 1.75rem;">
+                <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                    <div style="flex: 2; min-width: 250px;">
+                        <label class="form-label"><i class="fa-solid fa-barcode"></i> Medicine ID / Digital Twin ID</label>
+                        <input type="text" id="verify-medicine-id" class="form-control" placeholder="e.g. Enter Medicine ID or scan QR code">
+                    </div>
+                    <div style="flex: 2; min-width: 250px;">
+                        <label class="form-label"><i class="fa-solid fa-key"></i> QR Packaging Secret Token</label>
+                        <input type="text" id="verify-token" class="form-control" placeholder="Packaging Secret Token (optional)">
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button id="btn-customer-verify" class="btn btn-primary">
+                            <i class="fa-solid fa-magnifying-glass"></i> Verify Provenance
+                        </button>
+                        <button id="btn-customer-scan-qr" class="btn btn-outline" title="Scan QR Code with Camera">
+                            <i class="fa-solid fa-qrcode"></i> Scan QR
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authenticity Shield Banner -->
+            <div id="authenticity-banner-container">
+                <div class="card" style="text-align: center; padding: 2.5rem 1.5rem; background: var(--slate-50); border: 2px dashed var(--slate-200);">
+                    <div style="font-size: 2.5rem; color: var(--slate-400); margin-bottom: 0.75rem;">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </div>
+                    <h3 style="font-size: 1.2rem; color: var(--slate-700); margin-bottom: 0.5rem;">Ready to Verify Medicine Provenance</h3>
+                    <p style="font-size: 0.9rem; color: var(--slate-500); max-width: 500px; margin: 0 auto;">
+                        Enter a Medicine ID above or click <b>Scan QR</b> to inspect the medicine's cryptographic authenticity, cold-chain integrity, and physical journey on the blockchain ledger.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Provenance & Map Layout -->
+            <div id="medicine-provenance-container" style="display: none;">
+                <!-- Live Dynamic Chained Verification QR Card -->
+                <div id="customer-verification-qr-card" class="card" style="margin-bottom: 1.5rem; border: 1px solid var(--slate-200); background: #ffffff;">
+                    <div class="card-header" style="border-bottom: 1px solid var(--slate-100); padding-bottom: 0.75rem;">
+                        <div class="card-title" style="margin-bottom: 0; font-size: 1.05rem;">
+                            <i class="fa-solid fa-qrcode" style="color: var(--primary);"></i> Chained Verification Receipt & Dynamic QR Code
+                        </div>
+                        <span class="badge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-weight: 700;">
+                            <i class="fa-solid fa-link"></i> Linked to Predecessor Step
+                        </span>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; padding-top: 0.75rem;">
+                        <div style="text-align: center; min-width: 170px;">
+                            <img id="cust-verify-qr-img" src="" alt="Dynamic Verification QR Code" style="width: 160px; height: 160px; border-radius: 8px; border: 1px solid var(--slate-200); padding: 4px; background: #ffffff;">
+                            <div style="margin-top: 0.5rem;">
+                                <a id="cust-verify-qr-dl" href="#" download="VerificationReceipt-QR.png" class="btn btn-outline btn-sm" style="font-size: 0.78rem; width: 100%;">
+                                    <i class="fa-solid fa-download"></i> Save QR Badge
+                                </a>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 270px; font-size: 0.85rem;">
+                            <div style="font-size: 1rem; font-weight: 700; color: var(--slate-800); margin-bottom: 0.35rem;" id="cust-verify-step-title">
+                                Step #1: Verified State
+                            </div>
+                            <p style="color: var(--slate-600); margin-bottom: 0.75rem; line-height: 1.45;">
+                                A new dynamic QR code has been generated linking this verified state to its predecessor verification checkpoint on <b>Hyperledger Fabric</b>.
+                            </p>
+                            <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: 6px; padding: 0.75rem; font-family: monospace; font-size: 0.78rem; margin-bottom: 0.75rem; line-height: 1.6;">
+                                <div><span style="color: var(--slate-500);">Predecessor Hash (<code>prevHash</code>):</span> <b id="cust-verify-prev-hash" style="color: #2563eb; word-break: break-all;">-</b></div>
+                                <div style="margin-top: 2px;"><span style="color: var(--slate-500);">Current Checkpoint Hash (<code>entryHash</code>):</span> <b id="cust-verify-curr-hash" style="color: #059669; word-break: break-all;">-</b></div>
+                                <div style="margin-top: 2px;"><span style="color: var(--slate-500);">Committed Tx ID:</span> <b id="cust-verify-txid" style="color: #64748b; word-break: break-all;">-</b></div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button type="button" id="cust-verify-copy-link-btn" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+                                    <i class="fa-solid fa-copy"></i> Copy Chained Verification Link
+                                </button>
+                                <button type="button" id="cust-verify-inspect-link-btn" class="btn btn-outline btn-sm" style="font-size: 0.78rem; color: var(--primary); border-color: var(--primary);">
+                                    <i class="fa-solid fa-link"></i> View Hash Pointer Diagram
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medicine Specification Header -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fa-solid fa-pills" style="color: var(--primary);"></i>
+                            <span id="disp-brand">-</span>
+                            <span style="font-size: 0.85rem; font-weight: normal; color: var(--slate-500);">
+                                (<span id="disp-generic">-</span>)
+                            </span>
+                        </div>
+                        <div id="disp-status"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.9rem;">
+                        <div><span style="color: var(--slate-500);">Batch Number:</span> <b id="disp-batch">-</b></div>
+                        <div><span style="color: var(--slate-500);">Dosage & Form:</span> <b id="disp-dosage">-</b></div>
+                        <div><span style="color: var(--slate-500);">Expiry Date:</span> <b id="disp-expiry">-</b></div>
+                        <div><span style="color: var(--slate-500);">Blockchain Proof:</span> <b style="color: var(--success);"><i class="fa-solid fa-check-double"></i> SHA-256 Validated</b></div>
+                    </div>
+                </div>
+
+                <!-- Two-Column Map and Timeline -->
+                <div class="grid-2">
+                    <!-- Left: Interactive Map -->
+                    <div>
+                        <div class="map-wrapper">
+                            <div class="map-toolbar">
+                                <div style="font-weight: 700; font-size: 0.95rem; color: var(--slate-800);">
+                                    <i class="fa-solid fa-route" style="color: var(--primary);"></i> Physical Supply Chain Journey
+                                </div>
+                                <div style="font-size: 0.78rem; color: var(--slate-500);">
+                                    Geodesic Polyline &bull; GPS Verified
+                                </div>
+                            </div>
+                            <div id="tracking-map"></div>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--slate-500); display: flex; gap: 1rem; justify-content: center; margin-top: 0.5rem;">
+                            <span><span style="color:#10b981;">&#9679;</span> Factory (F)</span>
+                            <span><span style="color:#2563eb;">&#9679;</span> Transit Waypoint</span>
+                            <span><span style="color:#06b6d4;">&#9679;</span> Pharmacy (P)</span>
+                            <span><span style="color:#8b5cf6;">&#9679;</span> Customer (C)</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Immutable Provenance Timeline -->
+                    <div>
+                        <div class="card" style="height: 100%;">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fa-solid fa-timeline" style="color: var(--primary);"></i> Immutable Ledger Timeline
+                                </div>
+                                <span style="font-size: 0.8rem; color: var(--slate-500);">Fabric World State Audit</span>
+                            </div>
+                            <div id="provenance-timeline" class="timeline"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 2: MANUFACTURER (BATCH REGISTRATION & QR CODE MINT)          -->
+        <!-- ================================================================= -->
+        <section id="tab-manufacturer" class="tab-pane">
+            <div class="grid-2">
+                <!-- Registration Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fa-solid fa-industry" style="color: var(--primary);"></i> Register Medicine Batch Digital Twin
+                        </div>
+                        <button type="button" id="btn-generate-ids" class="btn btn-outline btn-sm">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Unique IDs
+                        </button>
+                    </div>
+
+                    <form id="init-medicine-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Medicine ID (Unique Digital Twin)</label>
+                                <input type="text" id="init-id" class="form-control" placeholder="e.g. MED-2026-001" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Production Batch Number</label>
+                                <input type="text" id="init-batch" class="form-control" placeholder="e.g. BATCH-A101" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Brand Name</label>
+                                <input type="text" id="init-brand" class="form-control" placeholder="e.g. Amoxicillin 500mg" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Generic Name</label>
+                                <input type="text" id="init-generic" class="form-control" placeholder="e.g. Amoxicillin Trihydrate" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Dosage Form</label>
+                                <input type="text" id="init-dosage" class="form-control" placeholder="e.g. Oral Capsule / Tablet / Injection">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Strength</label>
+                                <input type="text" id="init-strength" class="form-control" placeholder="e.g. 500mg">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Expiry Date</label>
+                                <input type="date" id="init-expiry" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Packaging Secret Token (Used for Anti-Counterfeit Hash)</label>
+                            <input type="text" id="init-secret-token" class="form-control" placeholder="Leave blank to auto-generate cryptographically secure token">
+                        </div>
+
+                        <div class="card-header" style="margin-top: 1rem;">
+                            <div class="card-title" style="font-size: 0.95rem;">
+                                <i class="fa-solid fa-location-dot"></i> Factory Origin Location
+                            </div>
+                            <div>
+                                <button type="button" id="btn-get-mfg-gps" class="btn btn-outline btn-sm">
+                                    <i class="fa-solid fa-crosshairs"></i> Use Device GPS
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Facility Name</label>
+                                <input type="text" id="init-facility" class="form-control" placeholder="e.g. BioPharma Manufacturing Plant">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Address</label>
+                                <input type="text" id="init-address" class="form-control" placeholder="e.g. 100 Industrial Way, Suite A">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Latitude</label>
+                                <input type="number" step="0.000001" id="init-lat" class="form-control" placeholder="e.g. 37.7749" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Longitude</label>
+                                <input type="number" step="0.000001" id="init-lng" class="form-control" placeholder="e.g. -122.4194" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Storage Temp (°C)</label>
+                                <input type="number" step="0.1" id="init-temp" class="form-control" placeholder="e.g. 21.0">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Humidity (%)</label>
+                                <input type="number" id="init-humidity" class="form-control" placeholder="e.g. 45">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                            <i class="fa-solid fa-cube"></i> Register Batch & Mint Digital Twin
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Generated QR Code Display -->
+                <div>
+                    <div id="manufacturer-qr-card" class="card" style="display: none;">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fa-solid fa-qrcode" style="color: var(--primary);"></i> Packaging QR Code & Token
+                            </div>
+                            <span class="badge badge-manufactured">MINTED</span>
+                        </div>
+
+                        <div class="qr-preview-box">
+                            <img id="mfg-qr-image" src="" alt="Medicine Packaging QR Code" class="qr-img">
+                            <div style="font-weight: 700; font-size: 1.1rem; color: var(--slate-900);" id="mfg-preview-id"></div>
+                            <div style="font-size: 0.85rem; color: var(--slate-500); margin-top: 4px;">
+                                Secret Token: <code id="mfg-preview-token" style="background:#e2e8f0; padding:2px 6px; border-radius:4px;"></code>
+                            </div>
+                            <div style="margin-top: 1.25rem; display: flex; gap: 0.5rem;">
+                                <a id="mfg-qr-download" href="#" class="btn btn-outline btn-sm">
+                                    <i class="fa-solid fa-download"></i> Download QR PNG
+                                </a>
+                                <button id="mfg-inspect-btn" class="btn btn-primary btn-sm">
+                                    <i class="fa-solid fa-eye"></i> View on Customer Map
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--slate-600); line-height: 1.4;">
+                            <i class="fa-solid fa-circle-info" style="color: var(--primary);"></i>
+                            This QR code embeds the medicine's digital twin URL and SHA-256 verification token. When printed on physical cartons, any downstream actor or customer scanning it will securely query Hyperledger Fabric.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 3: TRANSPORTER (GPS BREADCRUMB SCANNER)                       -->
+        <!-- ================================================================= -->
+        <section id="tab-transporter" class="tab-pane">
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-truck-moving" style="color: var(--primary);"></i> Transporter Route & Waypoint Logger
+                    </div>
+                    <button type="button" id="btn-scan-transporter-qr" class="btn btn-outline btn-sm">
+                        <i class="fa-solid fa-camera"></i> Scan Package QR
+                    </button>
+                </div>
+
+                <form id="transporter-checkpoint-form">
+                    <div class="form-group">
+                        <label class="form-label">Select Active Consignment</label>
+                        <select id="transporter-medicine-select" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Or Manual Medicine ID</label>
+                        <input type="text" id="transporter-manual-id" class="form-control" placeholder="e.g. Enter or scan Medicine ID">
+                    </div>
+
+                    <div class="card-header" style="margin-top: 1.25rem;">
+                        <div class="card-title" style="font-size: 0.95rem;">
+                            <i class="fa-solid fa-satellite"></i> Capture Real-Time GPS Coordinates
+                        </div>
+                        <button type="button" id="btn-get-current-gps" class="btn btn-outline btn-sm">
+                            <i class="fa-solid fa-crosshairs"></i> Get Current Device GPS
+                        </button>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Facility / Transit Waypoint Name</label>
+                            <input type="text" id="transporter-facility" class="form-control" placeholder="e.g. Distribution Center / Transit Depot" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Formatted Address</label>
+                            <input type="text" id="transporter-address" class="form-control" placeholder="e.g. 500 Transit Road, Logistics Sector">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Latitude</label>
+                            <input type="number" step="0.000001" id="transporter-lat" class="form-control" placeholder="e.g. 34.0522" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Longitude</label>
+                            <input type="number" step="0.000001" id="transporter-lng" class="form-control" placeholder="e.g. -118.2437" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cold-Chain Temp (°C)</label>
+                            <input type="number" step="0.1" id="transporter-temp" class="form-control" placeholder="e.g. 20.0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Humidity (%)</label>
+                            <input type="number" id="transporter-humidity" class="form-control" placeholder="e.g. 42">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        <i class="fa-solid fa-location-crosshairs"></i> Log In-Transit GPS Checkpoint to Ledger
+                    </button>
+                </form>
+
+                <!-- Transporter Newly Generated Checkpoint QR Card -->
+                <div id="transporter-qr-card" class="card" style="display: none; margin-top: 1.5rem; border: 1px solid #93c5fd; background: #f0fdf4;">
+                    <div class="card-header" style="border-bottom: 1px solid #bbf7d0;">
+                        <div class="card-title" style="color: #166534; font-size: 1rem;">
+                            <i class="fa-solid fa-qrcode"></i> Updated In-Transit Waypoint QR Code Minted!
+                        </div>
+                        <span class="badge" style="background: #dcfce7; color: #15803d; border: 1px solid #86efac; font-weight: 700;">
+                            <i class="fa-solid fa-link"></i> Linked to Previous Waypoint
+                        </span>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; padding-top: 0.75rem;">
+                        <div style="text-align: center; min-width: 160px;">
+                            <img id="transporter-qr-image" src="" alt="Checkpoint QR" style="width: 150px; height: 150px; border-radius: 8px; border: 1px solid var(--slate-200); padding: 4px; background: #ffffff;">
+                            <div style="margin-top: 0.5rem;">
+                                <a id="transporter-qr-download" href="#" download="Transit-Checkpoint-QR.png" class="btn btn-outline btn-sm" style="font-size: 0.78rem; width: 100%;">
+                                    <i class="fa-solid fa-download"></i> Download QR PNG
+                                </a>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 250px; font-size: 0.85rem;">
+                            <div style="font-weight: 700; color: #166534; font-size: 0.95rem; margin-bottom: 0.35rem;" id="transporter-step-title">
+                                In-Transit GPS Waypoint Recorded
+                            </div>
+                            <p style="color: #374151; margin-bottom: 0.5rem;">
+                                A new QR code has been generated linking this physical transit checkpoint with the previous verification step. Print or present this QR badge for the next transit handoff.
+                            </p>
+                            <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 6px; padding: 0.6rem; font-family: monospace; font-size: 0.78rem; margin-bottom: 0.75rem;">
+                                <div><span style="color: #6b7280;">Predecessor Hash (<code>prevHash</code>):</span> <b id="transporter-prev-hash" style="color: #2563eb; word-break: break-all;">-</b></div>
+                                <div style="margin-top: 2px;"><span style="color: #6b7280;">New Checkpoint Hash (<code>entryHash</code>):</span> <b id="transporter-entry-hash" style="color: #16a34a; word-break: break-all;">-</b></div>
+                            </div>
+                            <button type="button" id="transporter-inspect-btn" class="btn btn-primary btn-sm">
+                                <i class="fa-solid fa-shield-check"></i> Inspect Verified Route in Customer Portal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 4: PHARMACY & DISPENSER                                      -->
+        <!-- ================================================================= -->
+        <section id="tab-pharmacy" class="tab-pane">
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-prescription-bottle-medical" style="color: var(--primary);"></i> Pharmacy Stock Arrival & Dispensing
+                    </div>
+                    <button type="button" id="btn-scan-pharmacy-qr" class="btn btn-outline btn-sm">
+                        <i class="fa-solid fa-camera"></i> Scan QR Code
+                    </button>
+                </div>
+
+                <form id="pharmacy-receive-form">
+                    <div class="form-group">
+                        <label class="form-label">Select Inbound Medicine</label>
+                        <select id="pharmacy-medicine-select" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Or Manual Medicine ID</label>
+                        <input type="text" id="pharmacy-manual-id" class="form-control" placeholder="e.g. Enter or scan Medicine ID">
+                    </div>
+
+                    <div class="card-header" style="margin-top: 1rem;">
+                        <div class="card-title" style="font-size: 0.95rem;">
+                            <i class="fa-solid fa-location-dot"></i> Pharmacy Arrival Location
+                        </div>
+                        <div>
+                            <button type="button" id="btn-get-pharmacy-gps" class="btn btn-outline btn-sm">
+                                <i class="fa-solid fa-crosshairs"></i> Use Device GPS
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Pharmacy Facility Name</label>
+                            <input type="text" id="pharmacy-facility" class="form-control" placeholder="e.g. Central Community Pharmacy">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pharmacy Address</label>
+                            <input type="text" id="pharmacy-address" class="form-control" placeholder="e.g. 742 Evergreen Terrace, Medical Suite">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Pharmacy Latitude</label>
+                            <input type="number" step="0.000001" id="pharmacy-lat" class="form-control" placeholder="e.g. 40.7128">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pharmacy Longitude</label>
+                            <input type="number" step="0.000001" id="pharmacy-lng" class="form-control" placeholder="e.g. -74.0060">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 0.5rem;">
+                        <i class="fa-solid fa-boxes-packing"></i> Confirm Stock Arrival & Mark Ready for Sale
+                    </button>
+
+                    <hr style="margin: 1.75rem 0; border: none; border-top: 1px solid var(--slate-200);">
+
+                    <!-- Final Dispensing Section -->
+                    <div class="card-title" style="font-size: 1rem; margin-bottom: 0.75rem;">
+                        <i class="fa-solid fa-hand-holding-medical"></i> Dispense to Patient (Customer Sale)
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Packaging Verification Secret (From QR Code)</label>
+                        <input type="text" id="dispense-token" class="form-control" placeholder="Enter packaging token to cryptographically unlock sale">
+                    </div>
+
+                    <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                        <button type="button" id="btn-dispense-customer" class="btn btn-primary" style="flex: 2;">
+                            <i class="fa-solid fa-bag-shopping"></i> Dispense to Patient & Retire QR
+                        </button>
+                        <button type="button" id="btn-recall-batch" class="btn btn-danger" style="flex: 1;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Emergency Recall
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Pharmacy Stock Received QR Card -->
+                <div id="pharmacy-receive-qr-card" class="card" style="display: none; margin-top: 1.5rem; border: 1px solid #86efac; background: #f0fdf4;">
+                    <div class="card-header" style="border-bottom: 1px solid #bbf7d0;">
+                        <div class="card-title" style="color: #166534; font-size: 1rem;">
+                            <i class="fa-solid fa-qrcode"></i> Pharmacy Verified Custody QR Code Minted!
+                        </div>
+                        <span class="badge badge-ready_for_sale">
+                            <i class="fa-solid fa-link"></i> Linked to Transit Verification
+                        </span>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; padding-top: 0.75rem;">
+                        <div style="text-align: center; min-width: 160px;">
+                            <img id="pharmacy-receive-qr-image" src="" alt="Pharmacy Received QR" style="width: 150px; height: 150px; border-radius: 8px; border: 1px solid var(--slate-200); padding: 4px; background: #ffffff;">
+                            <div style="margin-top: 0.5rem;">
+                                <a id="pharmacy-receive-qr-download" href="#" download="Pharmacy-Stock-QR.png" class="btn btn-outline btn-sm" style="font-size: 0.78rem; width: 100%;">
+                                    <i class="fa-solid fa-download"></i> Download QR PNG
+                                </a>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 250px; font-size: 0.85rem;">
+                            <div style="font-weight: 700; color: #166534; font-size: 0.95rem; margin-bottom: 0.35rem;">
+                                Stock Arrived at Retail Pharmacy (Ready for Sale)
+                            </div>
+                            <p style="color: #374151; margin-bottom: 0.5rem;">
+                                This new QR code links the pharmacy's physical custody receipt with the predecessor transit checkpoints on Hyperledger Fabric.
+                            </p>
+                            <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 6px; padding: 0.6rem; font-family: monospace; font-size: 0.78rem; margin-bottom: 0.75rem;">
+                                <div><span style="color: #6b7280;">Predecessor Hash (<code>prevHash</code>):</span> <b id="pharmacy-receive-prev-hash" style="color: #2563eb; word-break: break-all;">-</b></div>
+                                <div style="margin-top: 2px;"><span style="color: #6b7280;">Pharmacy Hash (<code>entryHash</code>):</span> <b id="pharmacy-receive-entry-hash" style="color: #16a34a; word-break: break-all;">-</b></div>
+                            </div>
+                            <button type="button" id="pharmacy-receive-inspect-btn" class="btn btn-primary btn-sm">
+                                <i class="fa-solid fa-shield-check"></i> Inspect in Verification Portal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient Dispensed Receipt QR Card -->
+                <div id="pharmacy-dispense-qr-card" class="card" style="display: none; margin-top: 1.5rem; border: 1px solid #fed7aa; background: #fffaf0;">
+                    <div class="card-header" style="border-bottom: 1px solid #fed7aa;">
+                        <div class="card-title" style="color: #9a3412; font-size: 1rem;">
+                            <i class="fa-solid fa-receipt"></i> Patient Prescription Dispensing QR Receipt Minted!
+                        </div>
+                        <span class="badge" style="background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; font-weight: 700;">
+                            <i class="fa-solid fa-link"></i> Final Sale Chained
+                        </span>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; padding-top: 0.75rem;">
+                        <div style="text-align: center; min-width: 160px;">
+                            <img id="pharmacy-dispense-qr-image" src="" alt="Dispensed Receipt QR" style="width: 150px; height: 150px; border-radius: 8px; border: 1px solid var(--slate-200); padding: 4px; background: #ffffff;">
+                            <div style="margin-top: 0.5rem;">
+                                <a id="pharmacy-dispense-qr-download" href="#" download="Patient-Prescription-Receipt-QR.png" class="btn btn-outline btn-sm" style="font-size: 0.78rem; width: 100%;">
+                                    <i class="fa-solid fa-download"></i> Download Receipt QR
+                                </a>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 250px; font-size: 0.85rem;">
+                            <div style="font-weight: 700; color: #9a3412; font-size: 0.95rem; margin-bottom: 0.35rem;">
+                                Successfully Dispensed to Patient
+                            </div>
+                            <p style="color: #374151; margin-bottom: 0.5rem;">
+                                This final QR code serves as an immutable digital verification receipt for the patient, cryptographically linked with the pharmacy arrival verification.
+                            </p>
+                            <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: 6px; padding: 0.6rem; font-family: monospace; font-size: 0.78rem; margin-bottom: 0.75rem;">
+                                <div><span style="color: #6b7280;">Predecessor Hash (<code>prevHash</code>):</span> <b id="pharmacy-dispense-prev-hash" style="color: #2563eb; word-break: break-all;">-</b></div>
+                                <div style="margin-top: 2px;"><span style="color: #6b7280;">Dispense Hash (<code>entryHash</code>):</span> <b id="pharmacy-dispense-entry-hash" style="color: #ea580c; word-break: break-all;">-</b></div>
+                            </div>
+                            <button type="button" id="pharmacy-dispense-inspect-btn" class="btn btn-primary btn-sm">
+                                <i class="fa-solid fa-shield-check"></i> Inspect Final Record in Customer Portal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 5: CONSORTIUM EXPLORER                                       -->
+        <!-- ================================================================= -->
+        <section id="tab-explorer" class="tab-pane">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-cubes-stacked" style="color: var(--primary);"></i> Hyperledger Fabric Consortium Ledger Explorer
+                    </div>
+                    <span class="status-pill">Active Channel: pharma-tracking-channel</span>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Medicine ID</th>
+                                <th>Drug Name</th>
+                                <th>Batch No.</th>
+                                <th>Current Status</th>
+                                <th>Provenance Steps</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="explorer-table-body">
+                            <tr><td colspan="6" style="text-align: center;">Loading ledger assets...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- QR Scanner Modal -->
+    <div id="qr-scanner-modal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close" onclick="document.getElementById('qr-scanner-modal').classList.remove('active')">&times;</button>
+            <div class="card-title" style="margin-bottom: 1rem;">
+                <i class="fa-solid fa-qrcode"></i> Scan Medicine QR Code
+            </div>
+            <div id="qr-reader" style="width: 100%; border-radius: 8px; overflow: hidden;"></div>
+            <div id="qr-reader-status" style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--slate-600); text-align: center;"></div>
+            
+            <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--slate-200);">
+                <label class="form-label">Or upload a QR code image file:</label>
+                <input type="file" id="qr-file-input" accept="image/*" class="form-control" onchange="window.qrScannerInstance && window.qrScannerInstance.scanImageFile(this.files[0])">
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Detail Modal -->
+    <div id="tx-detail-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 750px;">
+            <button class="modal-close btn-modal-close">&times;</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--slate-200); padding-bottom: 0.75rem;">
+                <div class="card-title" style="margin-bottom: 0;">
+                    <i class="fa-solid fa-cube" style="color: var(--primary);"></i> Fabric Transaction Block Detail
+                </div>
+                <span id="tx-modal-status-badge" class="badge badge-ready_for_sale">VALID_COMMITTED</span>
+            </div>
+
+            <div id="tx-modal-overview" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; background: var(--slate-50); padding: 1rem; border-radius: 8px; border: 1px solid var(--slate-200); margin-bottom: 1rem; font-size: 0.85rem;">
+                <div><span style="color: var(--slate-500);">Channel:</span> <b id="tx-modal-channel">pharma-tracking-channel</b></div>
+                <div><span style="color: var(--slate-500);">Block Height:</span> <b id="tx-modal-block">#102</b></div>
+                <div><span style="color: var(--slate-500);">Action:</span> <b id="tx-modal-action">STATE_TRANSITION</b></div>
+                <div><span style="color: var(--slate-500);">Consensus:</span> <b>Raft CFT</b></div>
+                <div><span style="color: var(--slate-500);">Endorsing MSP:</span> <b id="tx-modal-msp">ManufacturerMSP</b></div>
+                <div><span style="color: var(--slate-500);">Signer ID:</span> <b id="tx-modal-signer">ADMIN</b></div>
+            </div>
+
+            <div style="margin-bottom: 0.75rem; font-size: 0.85rem;">
+                <label class="form-label">Full Transaction ID (SHA-256):</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="tx-modal-full-id" class="form-control" readonly style="font-family: monospace; font-size: 0.82rem; background: #f8fafc;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('tx-modal-full-id').value); alert('Copied full Tx ID to clipboard!');">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <label class="form-label" style="margin-bottom: 0;">Raw Ledger State Payload & Metadata:</label>
+                <button type="button" class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('tx-json-content').textContent); alert('Copied JSON payload to clipboard!');">
+                    <i class="fa-solid fa-copy"></i> Copy JSON
+                </button>
+            </div>
+            <pre id="tx-json-content" style="background: #0f172a; color: #38bdf8; padding: 1rem; border-radius: 8px; font-size: 0.82rem; max-height: 260px; overflow-y: auto;"></pre>
+        </div>
+    </div>
+
+    <!-- SHA-256 Hash Pointer Link Inspector Modal -->
+    <div id="hash-pointer-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 750px;">
+            <button class="modal-close btn-modal-close">&times;</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--slate-200); padding-bottom: 0.75rem;">
+                <div class="card-title" style="margin-bottom: 0;">
+                    <i class="fa-solid fa-link" style="color: var(--success);"></i> SHA-256 Hash Pointer Link Inspector
+                </div>
+                <span class="badge" style="background: #ecfdf5; color: #047857; font-weight: 700; border: 1px solid #a7f3d0;">
+                    <i class="fa-solid fa-check"></i> MERKLE POINTER VALID
+                </span>
+            </div>
+
+            <!-- Hash Pointer Visual Chain Card -->
+            <div style="background: #f8fafc; border: 1px solid var(--slate-200); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                <div style="font-size: 0.85rem; font-weight: 700; color: var(--slate-700); margin-bottom: 0.5rem;">
+                    <i class="fa-solid fa-arrow-turn-down"></i> Predecessor Waypoint Hash (<code style="color: #64748b;">prevHash</code>):
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <input type="text" id="hash-modal-prev" class="form-control" readonly style="font-family: monospace; font-size: 0.82rem; background: #ffffff; color: #475569;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('hash-modal-prev').value); alert('Copied prevHash to clipboard!');">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                </div>
+
+                <div style="text-align: center; color: var(--primary); font-size: 1.25rem; margin: 0.25rem 0;">
+                    <i class="fa-solid fa-link"></i> <span style="font-size: 0.78rem; font-weight: 700; vertical-align: middle; color: #2563eb; letter-spacing: 1px;">HASH POINTER CHAINED</span> <i class="fa-solid fa-arrow-down"></i>
+                </div>
+
+                <div style="font-size: 0.85rem; font-weight: 700; color: var(--slate-700); margin-bottom: 0.5rem;">
+                    <i class="fa-solid fa-fingerprint"></i> Current Waypoint SHA-256 Hash (<code style="color: #10b981;">entryHash</code>):
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="hash-modal-entry" class="form-control" readonly style="font-family: monospace; font-size: 0.82rem; background: #ffffff; color: #047857; font-weight: 600;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('hash-modal-entry').value); alert('Copied entryHash to clipboard!');">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mathematical Formula Explanation -->
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 0.85rem; font-size: 0.82rem; color: #1e40af; margin-bottom: 1rem; line-height: 1.5;">
+                <div style="font-weight: 700; margin-bottom: 0.25rem;"><i class="fa-solid fa-shield-halved"></i> Cryptographic Anti-Tampering Mechanism:</div>
+                <code>entryHash = SHA-256(prevHash || stepIndex || action || timestamp || coordinates || telemetry)</code><br>
+                Because each checkpoint incorporates the previous checkpoint's hash, any retroactive modification of coordinates, timestamps, or temperatures immediately breaks the link and is rejected by the consortium.
+            </div>
+
+            <div style="margin-bottom: 0.5rem;">
+                <label class="form-label">Waypoint Pre-Image Attributes Hashed:</label>
+            </div>
+            <pre id="hash-json-content" style="background: #0f172a; color: #34d399; padding: 0.85rem; border-radius: 8px; font-size: 0.82rem; max-height: 160px; overflow-y: auto;"></pre>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="js/maps.js"></script>
+    <script src="js/qrScanner.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

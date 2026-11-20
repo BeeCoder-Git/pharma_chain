@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+*.log
+.DS_Store
+chaincode/node_modules
+backend/node_modules

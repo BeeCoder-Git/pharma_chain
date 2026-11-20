@@ -1,0 +1,105 @@
+{
+  "name": "pharma-supply-chain-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "ManufacturerOrg",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300"
+        },
+        "orderer": "300"
+      }
+    }
+  },
+  "channels": {
+    "pharma-tracking-channel": {
+      "orderers": [
+        "orderer1.pharma.com"
+      ],
+      "peers": {
+        "peer0.manufacturer.pharma.com": {
+          "endorsingPeer": true,
+          "chaincodeQuery": true,
+          "ledgerQuery": true,
+          "eventSource": true
+        },
+        "peer0.distributor.pharma.com": {
+          "endorsingPeer": true,
+          "chaincodeQuery": true,
+          "ledgerQuery": true,
+          "eventSource": true
+        },
+        "peer0.pharmacy.pharma.com": {
+          "endorsingPeer": true,
+          "chaincodeQuery": true,
+          "ledgerQuery": true,
+          "eventSource": true
+        }
+      }
+    }
+  },
+  "organizations": {
+    "ManufacturerOrg": {
+      "mspid": "ManufacturerMSP",
+      "peers": [
+        "peer0.manufacturer.pharma.com"
+      ],
+      "certificateAuthorities": [
+        "ca.manufacturer.pharma.com"
+      ]
+    },
+    "DistributorOrg": {
+      "mspid": "DistributorMSP",
+      "peers": [
+        "peer0.distributor.pharma.com"
+      ],
+      "certificateAuthorities": [
+        "ca.distributor.pharma.com"
+      ]
+    },
+    "PharmacyOrg": {
+      "mspid": "PharmacyMSP",
+      "peers": [
+        "peer0.pharmacy.pharma.com"
+      ],
+      "certificateAuthorities": [
+        "ca.pharmacy.pharma.com"
+      ]
+    }
+  },
+  "orderers": {
+    "orderer1.pharma.com": {
+      "url": "grpcs://localhost:7050",
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer1.pharma.com"
+      }
+    }
+  },
+  "peers": {
+    "peer0.manufacturer.pharma.com": {
+      "url": "grpcs://localhost:7051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.manufacturer.pharma.com"
+      }
+    },
+    "peer0.distributor.pharma.com": {
+      "url": "grpcs://localhost:8051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.distributor.pharma.com"
+      }
+    },
+    "peer0.pharmacy.pharma.com": {
+      "url": "grpcs://localhost:9051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.pharmacy.pharma.com"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.manufacturer.pharma.com": {
+      "url": "https://localhost:7054",
+      "caName": "ca-manufacturer"
+    }
+  }
+}
