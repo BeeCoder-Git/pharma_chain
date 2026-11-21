@@ -409,6 +409,22 @@ router.post('/medicine/recall', mutationLimiter, verifyRole(['MANUFACTURER', 'RE
 });
 
 /**
+ * POST /api/ledger/reset
+ * Reset the persistent ledger store (Development / Demonstration mode only)
+ */
+router.post('/ledger/reset', mutationLimiter, verifyRole(['MANUFACTURER', 'DEVELOPER']), async (req, res) => {
+    try {
+        if (config.useMockLedger) {
+            mockLedger.clearLedgerData();
+            return res.json({ success: true, message: 'Persistent ledger store cleared successfully.' });
+        }
+        res.status(400).json({ success: false, error: 'Cannot reset live Hyperledger Fabric network via REST.' });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+/**
  * GET /api/medicine/:id
  */
 router.get('/medicine/:id', async (req, res) => {

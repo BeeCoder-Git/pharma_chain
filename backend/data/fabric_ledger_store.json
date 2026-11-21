@@ -1,0 +1,1474 @@
+{
+  "version": "1.0.0",
+  "channel": "pharma-tracking-channel",
+  "lastSavedAt": "2026-11-21T08:49:37.954Z",
+  "blockHeight": 13,
+  "worldState": [
+    [
+      "MED-GEN-210601",
+      {
+        "docType": "medicine",
+        "medicineId": "MED-GEN-210601",
+        "batchNumber": "BATCH-GEN-210601",
+        "drugDetails": {
+          "brandName": "Generalized Pharma Compound",
+          "genericName": "Compound-Alpha",
+          "dosageForm": "Capsule",
+          "strength": "100mg"
+        },
+        "manufacturerInfo": {
+          "orgMsp": "ManufacturerMSP",
+          "registeredBy": "MANUFACTURER_ADMIN",
+          "manufacturingDate": "2026-11-21T08:42:38.401Z",
+          "expiryDate": "2029-12-31T23:59:59Z"
+        },
+        "currentOwner": {
+          "orgMsp": "CONSUMER",
+          "holderId": "VERIFIED_PATIENT",
+          "role": "CUSTOMER"
+        },
+        "status": "DISPENSED",
+        "isRecalled": false,
+        "coldChainBreached": false,
+        "recallReason": "",
+        "verificationTokenHash": "77a1f73b5a638cb03356bb701865fd3985885c6a216930e00a71c503a2747130",
+        "secretTokenDemo": "",
+        "routeHistory": [
+          {
+            "stepIndex": 0,
+            "action": "MANUFACTURED_AND_SEALED",
+            "timestamp": "2026-11-21T08:42:38.401Z",
+            "recordedBy": {
+              "userId": "MANUFACTURER_ADMIN",
+              "orgMsp": "ManufacturerMSP"
+            },
+            "location": {
+              "latitude": 37.7749,
+              "longitude": -122.4194,
+              "facilityName": "Genesis Production Site",
+              "formattedAddress": "100 Innovation Way"
+            },
+            "telemetry": {
+              "temperatureCelsius": 21,
+              "humidityPercent": 44
+            },
+            "txId": "ef4431d7c8f4e52d3b6cc282b47fe2556e9cc9def19aa686c04fa0ee39745c79",
+            "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "entryHash": "d6ff32f4e1b1510a05209b1f11c60ea3f70cacdfe19d83fc025fd00f14780e11"
+          },
+          {
+            "stepIndex": 1,
+            "action": "IN_TRANSIT_GPS_CHECKPOINT",
+            "timestamp": "2026-11-21T08:42:38.420Z",
+            "recordedBy": {
+              "userId": "TRANSPORTER_MOBILE",
+              "orgMsp": "DistributorMSP"
+            },
+            "location": {
+              "latitude": 34.0522,
+              "longitude": -118.2437,
+              "facilityName": "Regional Distribution Center",
+              "formattedAddress": "500 Logistics Blvd"
+            },
+            "telemetry": {
+              "temperatureCelsius": 19.8,
+              "humidityPercent": 43
+            },
+            "txId": "886c7eaf53b3a851d0962b3b1580a5407aea6dd64b440ddee4437e66341ec34b",
+            "prevHash": "d6ff32f4e1b1510a05209b1f11c60ea3f70cacdfe19d83fc025fd00f14780e11",
+            "entryHash": "f7becaa518dd93d0933e4d288d0fe4c47ec2b91702d853f2ef7601179903d0ba"
+          },
+          {
+            "stepIndex": 2,
+            "action": "DISPENSED_TO_CUSTOMER",
+            "timestamp": "2026-11-21T08:42:38.425Z",
+            "recordedBy": {
+              "userId": "DISPENSING_COUNTER",
+              "orgMsp": "PharmacyMSP"
+            },
+            "location": {
+              "latitude": 34.0522,
+              "longitude": -118.2437,
+              "facilityName": "Community Care Pharmacy",
+              "formattedAddress": "Final Sale Point"
+            },
+            "telemetry": {
+              "verifiedAuthentic": true
+            },
+            "txId": "eb66f6b17c3e99efb7e38093bffdc05a3b1b58a23ae58f55b008126d2f884a69",
+            "prevHash": "f7becaa518dd93d0933e4d288d0fe4c47ec2b91702d853f2ef7601179903d0ba",
+            "entryHash": "c48a82804d5c914dd5daaf2915061e45cfe7f22e6bf41b409b8f924404ae67a8"
+          }
+        ]
+      }
+    ],
+    [
+      "MED-COLD-210601",
+      {
+        "docType": "medicine",
+        "medicineId": "MED-COLD-210601",
+        "batchNumber": "BATCH-COLD-210601",
+        "drugDetails": {
+          "brandName": "Biologic Product",
+          "dosageForm": "Vial",
+          "strength": "50ml"
+        },
+        "manufacturerInfo": {
+          "orgMsp": "ManufacturerMSP",
+          "registeredBy": "MANUFACTURER_ADMIN",
+          "manufacturingDate": "2026-11-21T08:42:38.423Z",
+          "expiryDate": "2028-12-31"
+        },
+        "currentOwner": {
+          "orgMsp": "ManufacturerMSP",
+          "holderId": "MANUFACTURER_ADMIN",
+          "role": "MANUFACTURER"
+        },
+        "status": "MANUFACTURED",
+        "isRecalled": false,
+        "coldChainBreached": true,
+        "recallReason": "",
+        "verificationTokenHash": "40fd8b63e98544bb24b3abdd4ab51f033a3d769a4378c9783933b0ecc553cfb9",
+        "secretTokenDemo": "",
+        "routeHistory": [
+          {
+            "stepIndex": 0,
+            "action": "MANUFACTURED_AND_SEALED",
+            "timestamp": "2026-11-21T08:42:38.423Z",
+            "recordedBy": {
+              "userId": "MANUFACTURER_ADMIN",
+              "orgMsp": "ManufacturerMSP"
+            },
+            "location": {
+              "latitude": 40.7128,
+              "longitude": -74.006,
+              "facilityName": "Thermal Test Facility",
+              "formattedAddress": "42 Cold Storage Rd"
+            },
+            "telemetry": {
+              "temperatureCelsius": 31.5,
+              "humidityPercent": 55,
+              "coldChainBreach": true
+            },
+            "txId": "2fb55463fef88d807cde4bbcc71772dbd4ba42ecae33a760f944dfea5b0cc672",
+            "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "entryHash": "849e4b1f2dd3756c41312afe02ab80cb7a0a9c99b1243e000ca24eacbb01e33b"
+          }
+        ]
+      }
+    ],
+    [
+      "MED-GEN-244137",
+      {
+        "docType": "medicine",
+        "medicineId": "MED-GEN-244137",
+        "batchNumber": "BATCH-GEN-244137",
+        "drugDetails": {
+          "brandName": "Generalized Pharma Compound",
+          "genericName": "Compound-Alpha",
+          "dosageForm": "Capsule",
+          "strength": "100mg"
+        },
+        "manufacturerInfo": {
+          "orgMsp": "ManufacturerMSP",
+          "registeredBy": "MANUFACTURER_ADMIN",
+          "manufacturingDate": "2026-11-21T08:44:15.717Z",
+          "expiryDate": "2029-12-31T23:59:59Z"
+        },
+        "currentOwner": {
+          "orgMsp": "CONSUMER",
+          "holderId": "VERIFIED_PATIENT",
+          "role": "CUSTOMER"
+        },
+        "status": "DISPENSED",
+        "isRecalled": false,
+        "coldChainBreached": false,
+        "recallReason": "",
+        "verificationTokenHash": "2137bea2823c2684e5785d3729d1be3853769758b9697225476db989b9ee17c9",
+        "secretTokenDemo": "",
+        "routeHistory": [
+          {
+            "stepIndex": 0,
+            "action": "MANUFACTURED_AND_SEALED",
+            "timestamp": "2026-11-21T08:44:15.717Z",
+            "recordedBy": {
+              "userId": "MANUFACTURER_ADMIN",
+              "orgMsp": "ManufacturerMSP"
+            },
+            "location": {
+              "latitude": 37.7749,
+              "longitude": -122.4194,
+              "facilityName": "Genesis Production Site",
+              "formattedAddress": "100 Innovation Way"
+            },
+            "telemetry": {
+              "temperatureCelsius": 21,
+              "humidityPercent": 44
+            },
+            "txId": "2b34ff64a17618e915c786afb460c6964813f381808118e17bf9843905699421",
+            "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "entryHash": "71da87f74d802a27781ab6358aa0c9fd5c3893518a9f7744cf75b236d4852070"
+          },
+          {
+            "stepIndex": 1,
+            "action": "IN_TRANSIT_GPS_CHECKPOINT",
+            "timestamp": "2026-11-21T08:44:15.722Z",
+            "recordedBy": {
+              "userId": "TRANSPORTER_MOBILE",
+              "orgMsp": "DistributorMSP"
+            },
+            "location": {
+              "latitude": 34.0522,
+              "longitude": -118.2437,
+              "facilityName": "Regional Distribution Center",
+              "formattedAddress": "500 Logistics Blvd"
+            },
+            "telemetry": {
+              "temperatureCelsius": 19.8,
+              "humidityPercent": 43
+            },
+            "txId": "196212bda165bb678218fcb550ab115a3e99658f6432d1f6eb38d20e9c8dd104",
+            "prevHash": "71da87f74d802a27781ab6358aa0c9fd5c3893518a9f7744cf75b236d4852070",
+            "entryHash": "a77cc101762c1364a7679902d7acb1b27af61970ac24b29e9c613a88159f1e12"
+          },
+          {
+            "stepIndex": 2,
+            "action": "DISPENSED_TO_CUSTOMER",
+            "timestamp": "2026-11-21T08:44:15.726Z",
+            "recordedBy": {
+              "userId": "DISPENSING_COUNTER",
+              "orgMsp": "PharmacyMSP"
+            },
+            "location": {
+              "latitude": 34.0522,
+              "longitude": -118.2437,
+              "facilityName": "Community Care Pharmacy",
+              "formattedAddress": "Final Sale Point"
+            },
+            "telemetry": {
+              "verifiedAuthentic": true
+            },
+            "txId": "6de96d7cdac2f9bb105ce8575462fb86bc046e1d26c49251b365a18b9a138a88",
+            "prevHash": "a77cc101762c1364a7679902d7acb1b27af61970ac24b29e9c613a88159f1e12",
+            "entryHash": "97a3a68f8354768a3610efcc5bff57b7ba0476e69c27e37aa2464e98020bc650"
+          }
+        ]
+      }
+    ],
+    [
+      "MED-COLD-244137",
+      {
+        "docType": "medicine",
+        "medicineId": "MED-COLD-244137",
+        "batchNumber": "BATCH-COLD-244137",
+        "drugDetails": {
+          "brandName": "Biologic Product",
+          "dosageForm": "Vial",
+          "strength": "50ml"
+        },
+        "manufacturerInfo": {
+          "orgMsp": "ManufacturerMSP",
+          "registeredBy": "MANUFACTURER_ADMIN",
+          "manufacturingDate": "2026-11-21T08:44:15.724Z",
+          "expiryDate": "2028-12-31"
+        },
+        "currentOwner": {
+          "orgMsp": "ManufacturerMSP",
+          "holderId": "MANUFACTURER_ADMIN",
+          "role": "MANUFACTURER"
+        },
+        "status": "MANUFACTURED",
+        "isRecalled": false,
+        "coldChainBreached": true,
+        "recallReason": "",
+        "verificationTokenHash": "40fd8b63e98544bb24b3abdd4ab51f033a3d769a4378c9783933b0ecc553cfb9",
+        "secretTokenDemo": "",
+        "routeHistory": [
+          {
+            "stepIndex": 0,
+            "action": "MANUFACTURED_AND_SEALED",
+            "timestamp": "2026-11-21T08:44:15.724Z",
+            "recordedBy": {
+              "userId": "MANUFACTURER_ADMIN",
+              "orgMsp": "ManufacturerMSP"
+            },
+            "location": {
+              "latitude": 40.7128,
+              "longitude": -74.006,
+              "facilityName": "Thermal Test Facility",
+              "formattedAddress": "42 Cold Storage Rd"
+            },
+            "telemetry": {
+              "temperatureCelsius": 31.5,
+              "humidityPercent": 55,
+              "coldChainBreach": true
+            },
+            "txId": "638e69b56d9d7165d4ece67f14b12346b6a153ab9e2cfb71f4508818c467d492",
+            "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "entryHash": "bc7addafe5c6f2c5b18224b0b7b857bab4457b0c90f73709d1d3ae8e19cb621a"
+          }
+        ]
+      }
+    ],
+    [
+      "MED-GEN-458521",
+      {
+        "docType": "medicine",
+        "medicineId": "MED-GEN-458521",
+        "batchNumber": "BATCH-GEN-458521",
+        "drugDetails": {
+          "brandName": "Generalized Pharma Compound",
+          "genericName": "Compound-Alpha",
+          "dosageForm": "Capsule",
+          "strength": "100mg"
+        },
+        "manufacturerInfo": {
+          "orgMsp": "ManufacturerMSP",
+          "registeredBy": "MANUFACTURER_ADMIN",
+          "manufacturingDate": "2026-11-21T08:49:37.940Z",
+          "expiryDate": "2029-12-31T23:59:59Z"
+        },
+        "currentOwner": {
+          "orgMsp": "CONSUMER",
+          "holderId": "VERIFIED_PATIENT",
+          "role": "CUSTOMER"
+        },
+        "status": "DISPENSED",
+        "isRecalled": false,
+        "coldChainBreached": false,
+        "recallReason": "",
+        "verificationTokenHash": "4b02f326a889b7de56065cac5c0d128b8bd615d8ed2f70d86d4055c8a8ac6600",
+        "secretTokenDemo": "",
+        "routeHistory": [
+          {
+            "stepIndex": 0,
+            "action": "MANUFACTURED_AND_SEALED",
+            "timestamp": "2026-11-21T08:49:37.940Z",
+            "recordedBy": {
+              "userId": "MANUFACTURER_ADMIN",
+              "orgMsp": "ManufacturerMSP"
+            },
+            "location": {
+              "latitude": 37.7749,
+              "longitude": -122.4194,
+              "facilityName": "Genesis Production Site",
+              "formattedAddress": "100 Innovation Way"
+            },
+            "telemetry": {
+              "temperatureCelsius": 21,
+              "humidityPercent": 44
+            },
+            "txId": "bf370ec7744686d70e2a83291180094de85297459d8216484870c3cf758dc172",
+            "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "entryHash": "f3374cfc552833546273a1addfec21313076fc45234ac0cb76ed9a9743bdedb5"
+          },
+          {
+            "stepIndex": 1,
+            "action": "IN_TRANSIT_GPS_CHECKPOINT",
+            "timestamp": "2026-11-21T08:49:37.946Z",
+            "recordedBy": {
+              "userId": "TRANSPORTER_MOBILE",
+              "orgMsp": "DistributorMSP"
+            },
+            "location": {
+              "latitude": 34.0522,
+              "longitude": -118.2437,
+              "facilityName": "Regional Distribution Center",
+              "formattedAddress": "500 Logistics Blvd"
+            },
+            "telemetry": {
+              "temperatureCelsius": 19.8,
+              "humidityPercent": 43
+            },
+            "txId": "df7e8e45c46d03d780845476139aab02749656fa89423a8b9617eadbcbc492cd",
+            "prevHash": "f3374cfc552833546273a1addfec21313076fc45234ac0cb76ed9a9743bdedb5",
+            "entryHash": "c837c9c025704d6c2b79e271b2a1869af939c48f917e8f3b3f2efb0ae28e783e"
+          },
+          {
+            "stepIndex": 2,
+            "action": "DISPENSED_TO_CUSTOMER",
+            "timestamp": "2026-11-21T08:49:37.954Z",
+            "recordedBy": {
+              "userId": "DISPENSING_COUNTER",
+              "orgMsp": "PharmacyMSP"
+            },
+            "location": {
+              "latitude": 34.0522,
+              "longitude": -118.2437,
+              "facilityName": "Community Care Pharmacy",
+              "formattedAddress": "Final Sale Point"
+            },
+            "telemetry": {
+              "verifiedAuthentic": true
+            },
+            "txId": "d0a1b7f1eeab8926122bc5a81588c94aaf1d53c68e3769749596ae16c582fec9",
+            "prevHash": "c837c9c025704d6c2b79e271b2a1869af939c48f917e8f3b3f2efb0ae28e783e",
+            "entryHash": "340cbc1fe01f7bb729efcefa7f7c91bac42c1b4a85f88a3cd20945477cc7f298"
+          }
+        ]
+      }
+    ],
+    [
+      "MED-COLD-458521",
+      {
+        "docType": "medicine",
+        "medicineId": "MED-COLD-458521",
+        "batchNumber": "BATCH-COLD-458521",
+        "drugDetails": {
+          "brandName": "Biologic Product",
+          "dosageForm": "Vial",
+          "strength": "50ml"
+        },
+        "manufacturerInfo": {
+          "orgMsp": "ManufacturerMSP",
+          "registeredBy": "MANUFACTURER_ADMIN",
+          "manufacturingDate": "2026-11-21T08:49:37.950Z",
+          "expiryDate": "2028-12-31"
+        },
+        "currentOwner": {
+          "orgMsp": "ManufacturerMSP",
+          "holderId": "MANUFACTURER_ADMIN",
+          "role": "MANUFACTURER"
+        },
+        "status": "MANUFACTURED",
+        "isRecalled": false,
+        "coldChainBreached": true,
+        "recallReason": "",
+        "verificationTokenHash": "40fd8b63e98544bb24b3abdd4ab51f033a3d769a4378c9783933b0ecc553cfb9",
+        "secretTokenDemo": "",
+        "routeHistory": [
+          {
+            "stepIndex": 0,
+            "action": "MANUFACTURED_AND_SEALED",
+            "timestamp": "2026-11-21T08:49:37.950Z",
+            "recordedBy": {
+              "userId": "MANUFACTURER_ADMIN",
+              "orgMsp": "ManufacturerMSP"
+            },
+            "location": {
+              "latitude": 40.7128,
+              "longitude": -74.006,
+              "facilityName": "Thermal Test Facility",
+              "formattedAddress": "42 Cold Storage Rd"
+            },
+            "telemetry": {
+              "temperatureCelsius": 31.5,
+              "humidityPercent": 55,
+              "coldChainBreach": true
+            },
+            "txId": "be0ea46787a47f2b3ecaa2f8bc8776bf0d0702942ff57f48f0b0145c1c8b4e20",
+            "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "entryHash": "34e58c138876ef259b4f77fdbe2076f0d60a71ebf2743fd49d7c1ca7126a0963"
+          }
+        ]
+      }
+    ]
+  ],
+  "historyLedger": [
+    [
+      "MED-GEN-210601",
+      [
+        {
+          "txId": "ef4431d7c8f4e52d3b6cc282b47fe2556e9cc9def19aa686c04fa0ee39745c79",
+          "blockNumber": 2,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "MANUFACTURED_AND_SEALED",
+          "recordedBy": {
+            "orgMsp": "ManufacturerMSP",
+            "userId": "MANUFACTURER_ADMIN"
+          },
+          "timestamp": "2026-11-21T08:42:38.417Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-210601",
+            "batchNumber": "BATCH-GEN-210601",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:42:38.401Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "MANUFACTURED",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "77a1f73b5a638cb03356bb701865fd3985885c6a216930e00a71c503a2747130",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:42:38.401Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "ef4431d7c8f4e52d3b6cc282b47fe2556e9cc9def19aa686c04fa0ee39745c79",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "d6ff32f4e1b1510a05209b1f11c60ea3f70cacdfe19d83fc025fd00f14780e11"
+              }
+            ]
+          }
+        },
+        {
+          "txId": "886c7eaf53b3a851d0962b3b1580a5407aea6dd64b440ddee4437e66341ec34b",
+          "blockNumber": 3,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "IN_TRANSIT_GPS_CHECKPOINT",
+          "recordedBy": {
+            "orgMsp": "DistributorMSP",
+            "userId": "TRANSPORTER_MOBILE"
+          },
+          "timestamp": "2026-11-21T08:42:38.421Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-210601",
+            "batchNumber": "BATCH-GEN-210601",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:42:38.401Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "IN_TRANSIT",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "77a1f73b5a638cb03356bb701865fd3985885c6a216930e00a71c503a2747130",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:42:38.401Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "ef4431d7c8f4e52d3b6cc282b47fe2556e9cc9def19aa686c04fa0ee39745c79",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "d6ff32f4e1b1510a05209b1f11c60ea3f70cacdfe19d83fc025fd00f14780e11"
+              },
+              {
+                "stepIndex": 1,
+                "action": "IN_TRANSIT_GPS_CHECKPOINT",
+                "timestamp": "2026-11-21T08:42:38.420Z",
+                "recordedBy": {
+                  "userId": "TRANSPORTER_MOBILE",
+                  "orgMsp": "DistributorMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Regional Distribution Center",
+                  "formattedAddress": "500 Logistics Blvd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 19.8,
+                  "humidityPercent": 43
+                },
+                "txId": "886c7eaf53b3a851d0962b3b1580a5407aea6dd64b440ddee4437e66341ec34b",
+                "prevHash": "d6ff32f4e1b1510a05209b1f11c60ea3f70cacdfe19d83fc025fd00f14780e11",
+                "entryHash": "f7becaa518dd93d0933e4d288d0fe4c47ec2b91702d853f2ef7601179903d0ba"
+              }
+            ]
+          }
+        },
+        {
+          "txId": "eb66f6b17c3e99efb7e38093bffdc05a3b1b58a23ae58f55b008126d2f884a69",
+          "blockNumber": 5,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "DISPENSED_TO_CUSTOMER",
+          "recordedBy": {
+            "orgMsp": "PharmacyMSP",
+            "userId": "DISPENSING_COUNTER"
+          },
+          "timestamp": "2026-11-21T08:42:38.425Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-210601",
+            "batchNumber": "BATCH-GEN-210601",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:42:38.401Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "CONSUMER",
+              "holderId": "VERIFIED_PATIENT",
+              "role": "CUSTOMER"
+            },
+            "status": "DISPENSED",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "77a1f73b5a638cb03356bb701865fd3985885c6a216930e00a71c503a2747130",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:42:38.401Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "ef4431d7c8f4e52d3b6cc282b47fe2556e9cc9def19aa686c04fa0ee39745c79",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "d6ff32f4e1b1510a05209b1f11c60ea3f70cacdfe19d83fc025fd00f14780e11"
+              },
+              {
+                "stepIndex": 1,
+                "action": "IN_TRANSIT_GPS_CHECKPOINT",
+                "timestamp": "2026-11-21T08:42:38.420Z",
+                "recordedBy": {
+                  "userId": "TRANSPORTER_MOBILE",
+                  "orgMsp": "DistributorMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Regional Distribution Center",
+                  "formattedAddress": "500 Logistics Blvd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 19.8,
+                  "humidityPercent": 43
+                },
+                "txId": "886c7eaf53b3a851d0962b3b1580a5407aea6dd64b440ddee4437e66341ec34b",
+                "prevHash": "d6ff32f4e1b1510a05209b1f11c60ea3f70cacdfe19d83fc025fd00f14780e11",
+                "entryHash": "f7becaa518dd93d0933e4d288d0fe4c47ec2b91702d853f2ef7601179903d0ba"
+              },
+              {
+                "stepIndex": 2,
+                "action": "DISPENSED_TO_CUSTOMER",
+                "timestamp": "2026-11-21T08:42:38.425Z",
+                "recordedBy": {
+                  "userId": "DISPENSING_COUNTER",
+                  "orgMsp": "PharmacyMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Community Care Pharmacy",
+                  "formattedAddress": "Final Sale Point"
+                },
+                "telemetry": {
+                  "verifiedAuthentic": true
+                },
+                "txId": "eb66f6b17c3e99efb7e38093bffdc05a3b1b58a23ae58f55b008126d2f884a69",
+                "prevHash": "f7becaa518dd93d0933e4d288d0fe4c47ec2b91702d853f2ef7601179903d0ba",
+                "entryHash": "c48a82804d5c914dd5daaf2915061e45cfe7f22e6bf41b409b8f924404ae67a8"
+              }
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "MED-COLD-210601",
+      [
+        {
+          "txId": "2fb55463fef88d807cde4bbcc71772dbd4ba42ecae33a760f944dfea5b0cc672",
+          "blockNumber": 4,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "MANUFACTURED_AND_SEALED",
+          "recordedBy": {
+            "orgMsp": "ManufacturerMSP",
+            "userId": "MANUFACTURER_ADMIN"
+          },
+          "timestamp": "2026-11-21T08:42:38.423Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-COLD-210601",
+            "batchNumber": "BATCH-COLD-210601",
+            "drugDetails": {
+              "brandName": "Biologic Product",
+              "dosageForm": "Vial",
+              "strength": "50ml"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:42:38.423Z",
+              "expiryDate": "2028-12-31"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "MANUFACTURED",
+            "isRecalled": false,
+            "coldChainBreached": true,
+            "recallReason": "",
+            "verificationTokenHash": "40fd8b63e98544bb24b3abdd4ab51f033a3d769a4378c9783933b0ecc553cfb9",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:42:38.423Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 40.7128,
+                  "longitude": -74.006,
+                  "facilityName": "Thermal Test Facility",
+                  "formattedAddress": "42 Cold Storage Rd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 31.5,
+                  "humidityPercent": 55,
+                  "coldChainBreach": true
+                },
+                "txId": "2fb55463fef88d807cde4bbcc71772dbd4ba42ecae33a760f944dfea5b0cc672",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "849e4b1f2dd3756c41312afe02ab80cb7a0a9c99b1243e000ca24eacbb01e33b"
+              }
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "MED-GEN-244137",
+      [
+        {
+          "txId": "2b34ff64a17618e915c786afb460c6964813f381808118e17bf9843905699421",
+          "blockNumber": 6,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "MANUFACTURED_AND_SEALED",
+          "recordedBy": {
+            "orgMsp": "ManufacturerMSP",
+            "userId": "MANUFACTURER_ADMIN"
+          },
+          "timestamp": "2026-11-21T08:44:15.719Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-244137",
+            "batchNumber": "BATCH-GEN-244137",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:44:15.717Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "MANUFACTURED",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "2137bea2823c2684e5785d3729d1be3853769758b9697225476db989b9ee17c9",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:44:15.717Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "2b34ff64a17618e915c786afb460c6964813f381808118e17bf9843905699421",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "71da87f74d802a27781ab6358aa0c9fd5c3893518a9f7744cf75b236d4852070"
+              }
+            ]
+          }
+        },
+        {
+          "txId": "196212bda165bb678218fcb550ab115a3e99658f6432d1f6eb38d20e9c8dd104",
+          "blockNumber": 7,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "IN_TRANSIT_GPS_CHECKPOINT",
+          "recordedBy": {
+            "orgMsp": "DistributorMSP",
+            "userId": "TRANSPORTER_MOBILE"
+          },
+          "timestamp": "2026-11-21T08:44:15.722Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-244137",
+            "batchNumber": "BATCH-GEN-244137",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:44:15.717Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "IN_TRANSIT",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "2137bea2823c2684e5785d3729d1be3853769758b9697225476db989b9ee17c9",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:44:15.717Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "2b34ff64a17618e915c786afb460c6964813f381808118e17bf9843905699421",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "71da87f74d802a27781ab6358aa0c9fd5c3893518a9f7744cf75b236d4852070"
+              },
+              {
+                "stepIndex": 1,
+                "action": "IN_TRANSIT_GPS_CHECKPOINT",
+                "timestamp": "2026-11-21T08:44:15.722Z",
+                "recordedBy": {
+                  "userId": "TRANSPORTER_MOBILE",
+                  "orgMsp": "DistributorMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Regional Distribution Center",
+                  "formattedAddress": "500 Logistics Blvd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 19.8,
+                  "humidityPercent": 43
+                },
+                "txId": "196212bda165bb678218fcb550ab115a3e99658f6432d1f6eb38d20e9c8dd104",
+                "prevHash": "71da87f74d802a27781ab6358aa0c9fd5c3893518a9f7744cf75b236d4852070",
+                "entryHash": "a77cc101762c1364a7679902d7acb1b27af61970ac24b29e9c613a88159f1e12"
+              }
+            ]
+          }
+        },
+        {
+          "txId": "6de96d7cdac2f9bb105ce8575462fb86bc046e1d26c49251b365a18b9a138a88",
+          "blockNumber": 9,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "DISPENSED_TO_CUSTOMER",
+          "recordedBy": {
+            "orgMsp": "PharmacyMSP",
+            "userId": "DISPENSING_COUNTER"
+          },
+          "timestamp": "2026-11-21T08:44:15.726Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-244137",
+            "batchNumber": "BATCH-GEN-244137",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:44:15.717Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "CONSUMER",
+              "holderId": "VERIFIED_PATIENT",
+              "role": "CUSTOMER"
+            },
+            "status": "DISPENSED",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "2137bea2823c2684e5785d3729d1be3853769758b9697225476db989b9ee17c9",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:44:15.717Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "2b34ff64a17618e915c786afb460c6964813f381808118e17bf9843905699421",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "71da87f74d802a27781ab6358aa0c9fd5c3893518a9f7744cf75b236d4852070"
+              },
+              {
+                "stepIndex": 1,
+                "action": "IN_TRANSIT_GPS_CHECKPOINT",
+                "timestamp": "2026-11-21T08:44:15.722Z",
+                "recordedBy": {
+                  "userId": "TRANSPORTER_MOBILE",
+                  "orgMsp": "DistributorMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Regional Distribution Center",
+                  "formattedAddress": "500 Logistics Blvd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 19.8,
+                  "humidityPercent": 43
+                },
+                "txId": "196212bda165bb678218fcb550ab115a3e99658f6432d1f6eb38d20e9c8dd104",
+                "prevHash": "71da87f74d802a27781ab6358aa0c9fd5c3893518a9f7744cf75b236d4852070",
+                "entryHash": "a77cc101762c1364a7679902d7acb1b27af61970ac24b29e9c613a88159f1e12"
+              },
+              {
+                "stepIndex": 2,
+                "action": "DISPENSED_TO_CUSTOMER",
+                "timestamp": "2026-11-21T08:44:15.726Z",
+                "recordedBy": {
+                  "userId": "DISPENSING_COUNTER",
+                  "orgMsp": "PharmacyMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Community Care Pharmacy",
+                  "formattedAddress": "Final Sale Point"
+                },
+                "telemetry": {
+                  "verifiedAuthentic": true
+                },
+                "txId": "6de96d7cdac2f9bb105ce8575462fb86bc046e1d26c49251b365a18b9a138a88",
+                "prevHash": "a77cc101762c1364a7679902d7acb1b27af61970ac24b29e9c613a88159f1e12",
+                "entryHash": "97a3a68f8354768a3610efcc5bff57b7ba0476e69c27e37aa2464e98020bc650"
+              }
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "MED-COLD-244137",
+      [
+        {
+          "txId": "638e69b56d9d7165d4ece67f14b12346b6a153ab9e2cfb71f4508818c467d492",
+          "blockNumber": 8,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "MANUFACTURED_AND_SEALED",
+          "recordedBy": {
+            "orgMsp": "ManufacturerMSP",
+            "userId": "MANUFACTURER_ADMIN"
+          },
+          "timestamp": "2026-11-21T08:44:15.724Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-COLD-244137",
+            "batchNumber": "BATCH-COLD-244137",
+            "drugDetails": {
+              "brandName": "Biologic Product",
+              "dosageForm": "Vial",
+              "strength": "50ml"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:44:15.724Z",
+              "expiryDate": "2028-12-31"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "MANUFACTURED",
+            "isRecalled": false,
+            "coldChainBreached": true,
+            "recallReason": "",
+            "verificationTokenHash": "40fd8b63e98544bb24b3abdd4ab51f033a3d769a4378c9783933b0ecc553cfb9",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:44:15.724Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 40.7128,
+                  "longitude": -74.006,
+                  "facilityName": "Thermal Test Facility",
+                  "formattedAddress": "42 Cold Storage Rd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 31.5,
+                  "humidityPercent": 55,
+                  "coldChainBreach": true
+                },
+                "txId": "638e69b56d9d7165d4ece67f14b12346b6a153ab9e2cfb71f4508818c467d492",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "bc7addafe5c6f2c5b18224b0b7b857bab4457b0c90f73709d1d3ae8e19cb621a"
+              }
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "MED-GEN-458521",
+      [
+        {
+          "txId": "bf370ec7744686d70e2a83291180094de85297459d8216484870c3cf758dc172",
+          "blockNumber": 10,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "MANUFACTURED_AND_SEALED",
+          "recordedBy": {
+            "orgMsp": "ManufacturerMSP",
+            "userId": "MANUFACTURER_ADMIN"
+          },
+          "timestamp": "2026-11-21T08:49:37.943Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-458521",
+            "batchNumber": "BATCH-GEN-458521",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:49:37.940Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "MANUFACTURED",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "4b02f326a889b7de56065cac5c0d128b8bd615d8ed2f70d86d4055c8a8ac6600",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:49:37.940Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "bf370ec7744686d70e2a83291180094de85297459d8216484870c3cf758dc172",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "f3374cfc552833546273a1addfec21313076fc45234ac0cb76ed9a9743bdedb5"
+              }
+            ]
+          }
+        },
+        {
+          "txId": "df7e8e45c46d03d780845476139aab02749656fa89423a8b9617eadbcbc492cd",
+          "blockNumber": 11,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "IN_TRANSIT_GPS_CHECKPOINT",
+          "recordedBy": {
+            "orgMsp": "DistributorMSP",
+            "userId": "TRANSPORTER_MOBILE"
+          },
+          "timestamp": "2026-11-21T08:49:37.946Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-458521",
+            "batchNumber": "BATCH-GEN-458521",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:49:37.940Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "IN_TRANSIT",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "4b02f326a889b7de56065cac5c0d128b8bd615d8ed2f70d86d4055c8a8ac6600",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:49:37.940Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "bf370ec7744686d70e2a83291180094de85297459d8216484870c3cf758dc172",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "f3374cfc552833546273a1addfec21313076fc45234ac0cb76ed9a9743bdedb5"
+              },
+              {
+                "stepIndex": 1,
+                "action": "IN_TRANSIT_GPS_CHECKPOINT",
+                "timestamp": "2026-11-21T08:49:37.946Z",
+                "recordedBy": {
+                  "userId": "TRANSPORTER_MOBILE",
+                  "orgMsp": "DistributorMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Regional Distribution Center",
+                  "formattedAddress": "500 Logistics Blvd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 19.8,
+                  "humidityPercent": 43
+                },
+                "txId": "df7e8e45c46d03d780845476139aab02749656fa89423a8b9617eadbcbc492cd",
+                "prevHash": "f3374cfc552833546273a1addfec21313076fc45234ac0cb76ed9a9743bdedb5",
+                "entryHash": "c837c9c025704d6c2b79e271b2a1869af939c48f917e8f3b3f2efb0ae28e783e"
+              }
+            ]
+          }
+        },
+        {
+          "txId": "d0a1b7f1eeab8926122bc5a81588c94aaf1d53c68e3769749596ae16c582fec9",
+          "blockNumber": 13,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "DISPENSED_TO_CUSTOMER",
+          "recordedBy": {
+            "orgMsp": "PharmacyMSP",
+            "userId": "DISPENSING_COUNTER"
+          },
+          "timestamp": "2026-11-21T08:49:37.954Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-GEN-458521",
+            "batchNumber": "BATCH-GEN-458521",
+            "drugDetails": {
+              "brandName": "Generalized Pharma Compound",
+              "genericName": "Compound-Alpha",
+              "dosageForm": "Capsule",
+              "strength": "100mg"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:49:37.940Z",
+              "expiryDate": "2029-12-31T23:59:59Z"
+            },
+            "currentOwner": {
+              "orgMsp": "CONSUMER",
+              "holderId": "VERIFIED_PATIENT",
+              "role": "CUSTOMER"
+            },
+            "status": "DISPENSED",
+            "isRecalled": false,
+            "coldChainBreached": false,
+            "recallReason": "",
+            "verificationTokenHash": "4b02f326a889b7de56065cac5c0d128b8bd615d8ed2f70d86d4055c8a8ac6600",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:49:37.940Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 37.7749,
+                  "longitude": -122.4194,
+                  "facilityName": "Genesis Production Site",
+                  "formattedAddress": "100 Innovation Way"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 21,
+                  "humidityPercent": 44
+                },
+                "txId": "bf370ec7744686d70e2a83291180094de85297459d8216484870c3cf758dc172",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "f3374cfc552833546273a1addfec21313076fc45234ac0cb76ed9a9743bdedb5"
+              },
+              {
+                "stepIndex": 1,
+                "action": "IN_TRANSIT_GPS_CHECKPOINT",
+                "timestamp": "2026-11-21T08:49:37.946Z",
+                "recordedBy": {
+                  "userId": "TRANSPORTER_MOBILE",
+                  "orgMsp": "DistributorMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Regional Distribution Center",
+                  "formattedAddress": "500 Logistics Blvd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 19.8,
+                  "humidityPercent": 43
+                },
+                "txId": "df7e8e45c46d03d780845476139aab02749656fa89423a8b9617eadbcbc492cd",
+                "prevHash": "f3374cfc552833546273a1addfec21313076fc45234ac0cb76ed9a9743bdedb5",
+                "entryHash": "c837c9c025704d6c2b79e271b2a1869af939c48f917e8f3b3f2efb0ae28e783e"
+              },
+              {
+                "stepIndex": 2,
+                "action": "DISPENSED_TO_CUSTOMER",
+                "timestamp": "2026-11-21T08:49:37.954Z",
+                "recordedBy": {
+                  "userId": "DISPENSING_COUNTER",
+                  "orgMsp": "PharmacyMSP"
+                },
+                "location": {
+                  "latitude": 34.0522,
+                  "longitude": -118.2437,
+                  "facilityName": "Community Care Pharmacy",
+                  "formattedAddress": "Final Sale Point"
+                },
+                "telemetry": {
+                  "verifiedAuthentic": true
+                },
+                "txId": "d0a1b7f1eeab8926122bc5a81588c94aaf1d53c68e3769749596ae16c582fec9",
+                "prevHash": "c837c9c025704d6c2b79e271b2a1869af939c48f917e8f3b3f2efb0ae28e783e",
+                "entryHash": "340cbc1fe01f7bb729efcefa7f7c91bac42c1b4a85f88a3cd20945477cc7f298"
+              }
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "MED-COLD-458521",
+      [
+        {
+          "txId": "be0ea46787a47f2b3ecaa2f8bc8776bf0d0702942ff57f48f0b0145c1c8b4e20",
+          "blockNumber": 12,
+          "channel": "pharma-tracking-channel",
+          "chaincode": "pharma-chaincode",
+          "action": "MANUFACTURED_AND_SEALED",
+          "recordedBy": {
+            "orgMsp": "ManufacturerMSP",
+            "userId": "MANUFACTURER_ADMIN"
+          },
+          "timestamp": "2026-11-21T08:49:37.951Z",
+          "isDelete": false,
+          "value": {
+            "docType": "medicine",
+            "medicineId": "MED-COLD-458521",
+            "batchNumber": "BATCH-COLD-458521",
+            "drugDetails": {
+              "brandName": "Biologic Product",
+              "dosageForm": "Vial",
+              "strength": "50ml"
+            },
+            "manufacturerInfo": {
+              "orgMsp": "ManufacturerMSP",
+              "registeredBy": "MANUFACTURER_ADMIN",
+              "manufacturingDate": "2026-11-21T08:49:37.950Z",
+              "expiryDate": "2028-12-31"
+            },
+            "currentOwner": {
+              "orgMsp": "ManufacturerMSP",
+              "holderId": "MANUFACTURER_ADMIN",
+              "role": "MANUFACTURER"
+            },
+            "status": "MANUFACTURED",
+            "isRecalled": false,
+            "coldChainBreached": true,
+            "recallReason": "",
+            "verificationTokenHash": "40fd8b63e98544bb24b3abdd4ab51f033a3d769a4378c9783933b0ecc553cfb9",
+            "secretTokenDemo": "",
+            "routeHistory": [
+              {
+                "stepIndex": 0,
+                "action": "MANUFACTURED_AND_SEALED",
+                "timestamp": "2026-11-21T08:49:37.950Z",
+                "recordedBy": {
+                  "userId": "MANUFACTURER_ADMIN",
+                  "orgMsp": "ManufacturerMSP"
+                },
+                "location": {
+                  "latitude": 40.7128,
+                  "longitude": -74.006,
+                  "facilityName": "Thermal Test Facility",
+                  "formattedAddress": "42 Cold Storage Rd"
+                },
+                "telemetry": {
+                  "temperatureCelsius": 31.5,
+                  "humidityPercent": 55,
+                  "coldChainBreach": true
+                },
+                "txId": "be0ea46787a47f2b3ecaa2f8bc8776bf0d0702942ff57f48f0b0145c1c8b4e20",
+                "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                "entryHash": "34e58c138876ef259b4f77fdbe2076f0d60a71ebf2743fd49d7c1ca7126a0963"
+              }
+            ]
+          }
+        }
+      ]
+    ]
+  ]
+}

@@ -1,17 +1,87 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const crypto = require('crypto');
 
+const DATA_DIR = path.resolve(__dirname, '../../data');
+const STORE_FILE = path.join(DATA_DIR, 'fabric_ledger_store.json');
+
 /**
- * MockLedgerService - Hardened Edition
+ * MockLedgerService - Hardened Edition with File-Backed Disk Persistence
  * High-fidelity Hyperledger Fabric Ledger Simulator with cryptographic hash pointer
  * chaining, constant-time validation, coordinate bounds checking, and cold-chain anomaly detection.
+ * Automatically saves state to backend/data/fabric_ledger_store.json to guarantee permanent storage across restarts.
  */
 class MockLedgerService {
     constructor() {
         this.worldState = new Map();
         this.historyLedger = new Map();
         this.blockHeight = 1;
+        this._ensureDataDir();
+        this._loadFromDisk();
+    }
+
+    _ensureDataDir() {
+        try {
+            if (!fs.existsSync(DATA_DIR)) {
+                fs.mkdirSync(DATA_DIR, { recursive: true });
+            }
+        } catch (err) {
+            console.warn('[Ledger Persistence] Could not create data directory:', err.message);
+        }
+    }
+
+    _loadFromDisk() {
+        try {
+            if (fs.existsSync(STORE_FILE)) {
+                const raw = fs.readFileSync(STORE_FILE, 'utf8');
+                if (raw && raw.trim().length > 0) {
+                    const data = JSON.parse(raw);
+                    if (Array.isArray(data.worldState)) {
+                        this.worldState = new Map(data.worldState);
+                    }
+                    if (Array.isArray(data.historyLedger)) {
+                        this.historyLedger = new Map(data.historyLedger);
+                    }
+                    if (typeof data.blockHeight === 'number') {
+                        this.blockHeight = data.blockHeight;
+                    }
+                    console.log(`[Fabric Ledger Simulator] Persistent ledger loaded from disk: ${this.worldState.size} digital twins, Block Height: #${this.blockHeight}.`);
+                }
+            }
+        } catch (err) {
+            console.warn('[Ledger Persistence] Warning loading ledger store from disk:', err.message);
+        }
+    }
+
+    _saveToDisk() {
+        try {
+            this._ensureDataDir();
+            const storeData = {
+                version: '1.0.0',
+                channel: 'pharma-tracking-channel',
+                lastSavedAt: new Date().toISOString(),
+                blockHeight: this.blockHeight,
+                worldState: Array.from(this.worldState.entries()),
+                historyLedger: Array.from(this.historyLedger.entries())
+            };
+            fs.writeFileSync(STORE_FILE, JSON.stringify(storeData, null, 2), 'utf8');
+        } catch (err) {
+            console.warn('[Ledger Persistence] Failed to write ledger store to disk:', err.message);
+        }
+    }
+
+    clearLedgerData() {
+        this.worldState.clear();
+        this.historyLedger.clear();
+        this.blockHeight = 1;
+        try {
+            if (fs.existsSync(STORE_FILE)) {
+                fs.unlinkSync(STORE_FILE);
+            }
+        } catch (e) {}
+        console.log('[Fabric Ledger Simulator] Ledger data cleared.');
     }
 
     _generateTxId() {
@@ -63,6 +133,7 @@ class MockLedgerService {
             value: JSON.parse(JSON.stringify(value))
         };
         this.historyLedger.get(key).push(historyRecord);
+        this._saveToDisk();
         return txId;
     }
 
